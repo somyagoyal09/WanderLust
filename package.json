@@ -7,8 +7,9 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "start": "node app.js",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
   "dependencies": {
     "@mapbox/mapbox-sdk": "^0.16.2",
     "axios": "^1.18.1",
