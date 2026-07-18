@@ -1,8 +1,13 @@
 const listing = require("../models/listing");
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapToken = process.env.MAP_TOKEN;
+const geocodingClient = mbxGeocoding({ accessToken: mapToken });
+
 const axios = require("axios");
 
 module.exports.index = async(req, res) =>{
-    const allListings = await listing.find({})
+    const allListings = await listing.find({});
+    console.log(allListings.length);
     res.render("listings/index", {allListings});
 };
 
@@ -15,49 +20,39 @@ module.exports.showListing = async (req, res) => {
     const foundListing = await listing.findById(id).populate({path: "reviews", populate: {path: "author",},}).populate("owner");
     if(!foundListing){
         req.flash("error", "Listing you requested for does not exist");
-        res.redirect("/listings");
+        return res.redirect("/listings");
     }
     console.log(foundListing);
+    console.log(foundListing.geometry);
+console.log(foundListing.geometry?.coordinates);
     console.log(foundListing.owner);
    console.log(foundListing.image);
 console.log(typeof foundListing.image);
     res.render("listings/show", {listing: foundListing });
 };
 
-module.exports.createListing = async (req, res) => {
-    let url = req.file.path;
-    let filename = req.file.filename;
+
+module.exports.createListing = async (req, res, next) => {
+  const geoResponse = await geocodingClient.forwardGeocode({
+  query: req.body.listing.location,
+  limit: 1,
+})
+  .send();
+ 
+  
+let url = req.file.path;
+let filename = req.file.filename;
+    
 
     const newListing = new listing(req.body.listing);
 
-    const response = await axios.get(
-        "https://nominatim.openstreetmap.org/search",
-        {
-            params: {
-                q: req.body.listing.location,
-                format: "json",
-                limit: 1,
-            },
-            headers: {
-                "User-Agent": "wanderlust-app",
-            },
-        }
-    );
-
-    if (response.data.length > 0) {
-        newListing.geometry = {
-            type: "Point",
-            coordinates: [
-                parseFloat(response.data[0].lon),
-                parseFloat(response.data[0].lat),
-            ],
-        };
-    }
-
     newListing.owner = req.user._id;
     newListing.image = { url, filename };
-
-    await newListing.save();
+    console.log(geoResponse.body.features);
+    newListing.geometry = geoResponse.body.features[0].geometry;
+    
+    let savedListing = await newListing.save();
+    console.log(savedListing)
 
     req.flash("success", "New Listing Created!");
     res.redirect("/listings");

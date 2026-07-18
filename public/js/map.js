@@ -1,7 +1,20 @@
-console.log("Map JS Loaded");
 
-const map = L.map("map").setView([20.5937, 78.9629], 5);
+    mapboxgl.accessToken = mapToken;
+    const map = new mapboxgl.Map({
+        
+        container: 'map', // container ID
+        center: listing.geometry.coordinates, // starting position [lng, lat]. Note that lat must be set between -90 and 90
+        zoom: 9 // starting zoom
+    });
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: "&copy; OpenStreetMap contributors",
-}).addTo(map);
+    console.log(listing.geometry.coordinates);
+const marker = new mapboxgl.Marker({color: "red"})
+.setLngLat(listing.geometry.coordinates) // Listing.geometry.coordinates
+    .setPopup(
+        new mapboxgl.Popup({
+            offset: 25
+        })
+        .setHTML(`<h3>${listing.title}</h3>
+        <p>Exact Location provided after booking</p>`)
+    )
+    .addTo(map);

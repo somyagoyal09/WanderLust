@@ -1,4 +1,9 @@
 {
+  
+    "engines": {
+      "node": "v24.16.0"
+    },
+  
   "name": "major_project_1",
   "version": "1.0.0",
   "description": "",
@@ -7,14 +12,15 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-  "start": "node app.js",
-  "test": "echo \"Error: no test specified\" && exit 1"
-},
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "@mapbox/mapbox-sdk": "^0.16.2",
     "axios": "^1.18.1",
     "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
