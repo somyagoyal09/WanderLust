@@ -90,7 +90,11 @@ npm start
 ---
 
 ## 📸 Screenshots
-<img width="1920" height="1080" alt="Screenshot (127)" src="https://github.com/user-attachments/assets/204140ae-9132-41f2-9bec-daf71969c679" />
+<img width="1920" height="1080" alt="Screenshot (157)" src="https://github.com/user-attachments/assets/b046ec82-51f4-42b7-aa54-ff5c6262df02" />
+<img width="1920" height="1080" alt="Screenshot (158)" src="https://github.com/user-attachments/assets/b1bc611b-e964-4c41-8023-9cf2afe266ff" />
+<img width="1920" height="1080" alt="Screenshot (159)" src="https://github.com/user-attachments/assets/ac022692-26e9-48cb-af05-cc6a52674c20" />
+
+
 
 ---
 
